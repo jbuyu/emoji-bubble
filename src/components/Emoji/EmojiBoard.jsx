@@ -4,25 +4,31 @@ import EmojiButton from "./EmojiButton";
 import EmojiBubble from "./EmojiBubble";
 import EmojiBoardWrapper from "./EmojiBoardWrapper";
 import { generate } from "short-id";
+import AutoExpire from "../AutoExpire";
 const EmojiBoard = () => {
   const emojis = [
     {
+      id: 0,
       label: "Thumbs Up",
       symbol: "👍",
     },
     {
+      id: 1,
       label: "Mind Blown",
       symbol: "⛴ ",
     },
     {
+      id: 2,
       label: "Touche",
       symbol: "✌",
     },
     {
+      id: 3,
       label: "react",
       symbol: "⚛",
     },
     {
+      id: 4,
       label: "shyt",
       symbol: "💩",
     },
@@ -77,10 +83,10 @@ const EmojiBoard = () => {
     <div>
       <div>
         <EmojiBoardWrapper>
-          {emojis.map(({ label, symbol }, i) => {
+          {emojis.map(({ label, symbol, id }) => {
             return (
               <EmojiButton
-                key={i}
+                key={id}
                 onClick={() => handleEmojiClick(label, symbol)}
                 onkeydown={(e) => handleEmojiKeyDown(e, label, symbol)}
               >
@@ -90,10 +96,9 @@ const EmojiBoard = () => {
           })}
         </EmojiBoardWrapper>
       </div>
-      <div>
-        {emojiQueue.map(({ id, label, symbol, size, left, one, two }) => (
+      {emojiQueue.map(({ id, label, symbol, size, left, one, two }) => (
+        <AutoExpire key={id}>
           <EmojiBubble
-            key={id}
             label={label}
             symbol={symbol}
             size={size}
@@ -101,8 +106,8 @@ const EmojiBoard = () => {
             one={one}
             two={two}
           />
-        ))}
-      </div>
+        </AutoExpire>
+      ))}
     </div>
   );
 };
