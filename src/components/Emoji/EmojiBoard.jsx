@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Emoji from "./Emoji";
 import EmojiButton from "./EmojiButton";
+import EmojiBubble from "./EmojiBubble";
 import EmojiBoardWrapper from "./EmojiBoardWrapper";
+import { generate } from "short-id";
 const EmojiBoard = () => {
   const emojis = [
     {
@@ -44,6 +46,7 @@ const EmojiBoard = () => {
         left: randomNumber(100, 0),
         one: randomPosorNeg(200, 50),
         two: randomPosorNeg(200, 50),
+        id: generate(),
       },
     ]);
     //key
@@ -60,6 +63,7 @@ const EmojiBoard = () => {
           left: randomNumber(100, 0),
           one: randomPosorNeg(200, 50),
           two: randomPosorNeg(200, 50),
+          id: generate(),
         },
       ]);
     }
@@ -71,19 +75,34 @@ const EmojiBoard = () => {
   }, [emojiQueue]);
   return (
     <div>
-      <EmojiBoardWrapper>
-        {emojis.map(({ label, symbol }, i) => {
-          return (
-            <EmojiButton
-              key={i}
-              onClick={() => handleEmojiClick(label, symbol)}
-              onkeydown={(e) => handleEmojiKeyDown(e, label, symbol)}
-            >
-              <Emoji label={label} symbol={symbol} size="3rem" />
-            </EmojiButton>
-          );
-        })}
-      </EmojiBoardWrapper>
+      <div>
+        <EmojiBoardWrapper>
+          {emojis.map(({ label, symbol }, i) => {
+            return (
+              <EmojiButton
+                key={i}
+                onClick={() => handleEmojiClick(label, symbol)}
+                onkeydown={(e) => handleEmojiKeyDown(e, label, symbol)}
+              >
+                <Emoji label={label} symbol={symbol} size="3rem" />
+              </EmojiButton>
+            );
+          })}
+        </EmojiBoardWrapper>
+      </div>
+      <div>
+        {emojiQueue.map(({ id, label, symbol, size, left, one, two }) => (
+          <EmojiBubble
+            key={id}
+            label={label}
+            symbol={symbol}
+            size={size}
+            left={left}
+            one={one}
+            two={two}
+          />
+        ))}
+      </div>
     </div>
   );
 };
