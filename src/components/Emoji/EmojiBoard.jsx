@@ -3,6 +3,7 @@ import Emoji from "./Emoji";
 import EmojiButton from "./EmojiButton";
 import EmojiBubble from "./EmojiBubble";
 import EmojiBoardWrapper from "./EmojiBoardWrapper";
+import loading from "../../loading.gif";
 import { generate } from "short-id";
 import AutoExpire from "../AutoExpire";
 const EmojiBoard = () => {
@@ -108,6 +109,13 @@ const EmojiBoard = () => {
           />
         </AutoExpire>
       ))}
+      <div>
+        <img
+          style={{ width: "50px", height: "50px" }}
+          src={loading}
+          alt="loading"
+        />
+      </div>
     </div>
   );
 };
